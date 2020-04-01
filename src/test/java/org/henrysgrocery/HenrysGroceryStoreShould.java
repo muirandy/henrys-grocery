@@ -23,43 +23,43 @@ class HenrysGroceryStoreShould {
     void emptyBasket() {
         BigDecimal total = basket.priceUp(TODAY);
 
-        assertThat(total).isEqualByComparingTo(BigDecimal.ZERO);
+        assertBasketValue(total, 0);
     }
 
     @Test
     void singleMilk() {
-        basket.add(1, MILK);
+        BigDecimal total = basket.add(1, MILK)
+                                 .priceUp(TODAY);
 
-        BigDecimal total = basket.priceUp(TODAY);
-
-        assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(1.30));
+        assertBasketValue(total, 1.30);
     }
 
     @Test
     void multipleMilk() {
-        basket.add(3, MILK);
+        BigDecimal total = basket.add(3, MILK)
+                                 .priceUp(TODAY);
 
-        BigDecimal total = basket.priceUp(TODAY);
-
-        assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(3.90));
+        assertBasketValue(total, 3.90);
     }
 
     @Test
     void differentItems() {
-        basket.add(1, MILK);
-        basket.add(1, APPLE);
+        BigDecimal total = basket.add(1, MILK)
+                                 .add(1, APPLE)
+                                 .priceUp(TODAY);
 
-        BigDecimal total = basket.priceUp(TODAY);
-
-        assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(1.40));
+        assertBasketValue(total, 1.40);
     }
 
     @Test
     void discountedApple() {
-        basket.add(1, APPLE);
+        BigDecimal total = basket.add(1, APPLE)
+                                 .priceUp(THREE_DAYS_HENCE);
 
-        BigDecimal total = basket.priceUp(THREE_DAYS_HENCE);
+        assertBasketValue(total, 0.09);
+    }
 
-        assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(0.09));
+    private void assertBasketValue(BigDecimal total, double val) {
+        assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(val));
     }
 }

@@ -8,9 +8,10 @@ import java.util.List;
 public class Basket {
     private List<Item> items = new ArrayList<>();
 
-    public void add(int quantity, Item item) {
+    public Basket add(int quantity, Item item) {
         for (int i = 0; i < quantity; i++)
             items.add(item);
+        return this;
     }
 
     public BigDecimal priceUp(LocalDate purchaseDate) {
