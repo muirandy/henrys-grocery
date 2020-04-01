@@ -21,6 +21,6 @@ public class Basket {
     }
 
     public BigDecimal priceUp(BasketPricer basketPricer) {
-        return basketPricer.priceUp(items.stream());
+        return basketPricer.priceUp(items);
     }
 }

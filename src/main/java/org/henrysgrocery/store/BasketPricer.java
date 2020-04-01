@@ -3,37 +3,57 @@ package org.henrysgrocery.store;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 
 class BasketPricer {
 
     public static BasketPricer forDay(LocalDate today) {
-        return new BasketPricer(today);
+        BasketPricer basketPricer = new BasketPricer();
+        if (applePromotionApplies(today))
+            return basketPricer.withPromotion(new ApplePromotion());
+
+        return basketPricer;
     }
 
-    private LocalDate purchaseDate;
-
-    private BasketPricer(LocalDate purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
-
-    public BigDecimal priceUp(Stream<Item> items) {
-        return items
-                .map(i -> i.price)
-                .map(p -> applyDiscount(purchaseDate, p))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private BigDecimal applyDiscount(LocalDate purchaseDate, BigDecimal p) {
-        if (discountApplies(purchaseDate))
-            return p.multiply(BigDecimal.valueOf(0.9));
-        return p;
-    }
-
-    private boolean discountApplies(LocalDate purchaseDate) {
+    private static boolean applePromotionApplies(LocalDate purchaseDate) {
         LocalDate today = LocalDate.now();
         LocalDate dayAfterEndOfNextMonth = today.plusMonths(2).with(TemporalAdjusters.firstDayOfMonth());
         return purchaseDate.isAfter(today.plusDays(2))
                 && purchaseDate.isBefore(dayAfterEndOfNextMonth);
+    }
+
+    private List<ApplePromotion> promotions = new ArrayList<>();
+
+    private BasketPricer withPromotion(ApplePromotion applePromotion) {
+        addPromotion(applePromotion);
+        return this;
+    }
+
+    private void addPromotion(ApplePromotion applePromotion) {
+        promotions.add(applePromotion);
+    }
+
+    public BigDecimal priceUp(List<Item> items) {
+        BigDecimal total = items.stream()
+                .map(i -> i.price)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal discount = calculateDiscount(items);
+        return total.subtract(discount);
+    }
+
+    private BigDecimal calculateDiscount(List<Item> items) {
+        return promotions.stream()
+                  .map(p -> p.apply(items))
+                  .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public static class ApplePromotion {
+        public BigDecimal apply(List<Item> items) {
+            long numberOfApples = items.stream()
+                               .filter(i -> i.milk.equals("Apples"))
+                               .count();
+            return BigDecimal.valueOf(0.01).multiply(BigDecimal.valueOf(numberOfApples));
+        }
     }
 }
