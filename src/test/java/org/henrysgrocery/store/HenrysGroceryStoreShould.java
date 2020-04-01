@@ -17,12 +17,14 @@ class HenrysGroceryStoreShould {
     private static final LocalDate TODAY = LocalDate.now();
     private static final LocalDate TWO_DAYS_HENCE = TODAY.plusDays(2);
     private static final LocalDate THREE_DAYS_HENCE = TODAY.plusDays(3);
+    private static final LocalDate FIVE_DAYS_HENCE = TODAY.plusDays(5);
     private static final LocalDate END_OF_NEXT_MONTH = TODAY.plusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
     private static final LocalDate DAY_AFTER_END_OF_NEXT_MONTH = END_OF_NEXT_MONTH.plusDays(1);
 
     private static final BasketPricer BASKET_PRICER_TODAY = BasketPricerCreator.forDay(TODAY);
     private static final BasketPricer BASKET_PRICER_TWO_DAYS_HENCE = BasketPricerCreator.forDay(TWO_DAYS_HENCE);
     private static final BasketPricer BASKET_PRICER_THREE_DAYS_HENCE = BasketPricerCreator.forDay(THREE_DAYS_HENCE);
+    private static final BasketPricer BASKET_PRICER_FIVE_DAYS_HENCE = BasketPricerCreator.forDay(FIVE_DAYS_HENCE);
     private static final BasketPricer BASKET_PRICER_END_OF_NEXT_MONTH = BasketPricerCreator.forDay(END_OF_NEXT_MONTH);
     private static final BasketPricer BASKET_PRICER_DAY_AFTER_END_OF_NEXT_MONTH = BasketPricerCreator.forDay(DAY_AFTER_END_OF_NEXT_MONTH);
 
@@ -116,6 +118,39 @@ class HenrysGroceryStoreShould {
                                 .add(1, APPLE)
                                 .priceUp(BASKET_PRICER_THREE_DAYS_HENCE), 1.79);
 
+    }
+
+    @Test
+    void example1() {
+        assertBasketValue(Basket.create()
+                                .add(3, SOUP)
+                                .add(2, BREAD)
+                                .priceUp(BASKET_PRICER_TODAY), 3.15);
+    }
+
+    @Test
+    void example2() {
+        assertBasketValue(Basket.create()
+                                .add(6, APPLE)
+                                .add(1, MILK)
+                                .priceUp(BASKET_PRICER_TODAY), 1.90);
+    }
+
+    @Test
+    void example3() {
+        assertBasketValue(Basket.create()
+                                .add(6, APPLE)
+                                .add(1, MILK)
+                                .priceUp(BASKET_PRICER_FIVE_DAYS_HENCE), 1.84);
+    }
+
+    @Test
+    void example4() {
+        assertBasketValue(Basket.create()
+                                .add(3, APPLE)
+                                .add(2, SOUP)
+                                .add(1, BREAD)
+                                .priceUp(BASKET_PRICER_FIVE_DAYS_HENCE), 1.97);
     }
 
     private void assertBasketValue(BigDecimal total, double val) {
