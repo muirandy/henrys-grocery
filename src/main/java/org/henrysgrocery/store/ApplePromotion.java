@@ -5,7 +5,8 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
-public class ApplePromotion {
+public class ApplePromotion implements Promotion {
+    @Override
     public BigDecimal apply(List<Item> items) {
         long numberOfApples = items.stream()
                            .filter(i -> i.name.equals("Apples"))
@@ -13,6 +14,7 @@ public class ApplePromotion {
         return BigDecimal.valueOf(0.01).multiply(BigDecimal.valueOf(numberOfApples));
     }
 
+    @Override
     public boolean applies(LocalDate purchaseDate) {
         LocalDate today = LocalDate.now();
         LocalDate dayAfterEndOfNextMonth = today.plusMonths(2).with(TemporalAdjusters.firstDayOfMonth());

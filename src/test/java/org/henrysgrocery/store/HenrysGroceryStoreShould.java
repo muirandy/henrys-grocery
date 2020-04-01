@@ -87,6 +87,25 @@ class HenrysGroceryStoreShould {
         assertBasketValue(basket.add(1, BREAD)
                                 .add(1, SOUP)
                                 .priceUp(BASKET_PRICER_TODAY), 1.45);
+        assertBasketValue(Basket.create()
+                                .add(2, SOUP)
+                                .priceUp(BASKET_PRICER_TODAY), 1.30);
+    }
+
+    @Test
+    void halfPriceBread() {
+        assertBasketValue(Basket.create()
+                                .add(2, SOUP)
+                                .add(1, BREAD)
+                                .priceUp(BASKET_PRICER_TODAY), 1.70);
+        assertBasketValue(Basket.create()
+                                .add(4, SOUP)
+                                .add(2, BREAD)
+                                .priceUp(BASKET_PRICER_TODAY), 3.40);
+        assertBasketValue(Basket.create()
+                                .add(4, SOUP)
+                                .add(1, BREAD)
+                                .priceUp(BASKET_PRICER_TODAY), 3.00);
     }
 
     private void assertBasketValue(BigDecimal total, double val) {

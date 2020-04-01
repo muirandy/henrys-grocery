@@ -8,19 +8,23 @@ import java.util.List;
 
 class BasketPricer {
 
-    private List<ApplePromotion> promotions = new ArrayList<>();
+    private List<Promotion> promotions = new ArrayList<>();
 
     public static BasketPricer forDay(LocalDate today) {
         BasketPricer basketPricer = new BasketPricer();
-        ApplePromotion applePromotion = new ApplePromotion();
+        Promotion applePromotion = new ApplePromotion();
         if (applePromotion.applies(today)) {
             return basketPricer.withPromotion(applePromotion);
         }
 
+        Promotion soupAndBreadPromotion = new SoupAndBreadPromotion();
+        if (soupAndBreadPromotion.applies(today))
+            return basketPricer.withPromotion(soupAndBreadPromotion);
+
         return basketPricer;
     }
 
-    private BasketPricer withPromotion(ApplePromotion applePromotion) {
+    private BasketPricer withPromotion(Promotion applePromotion) {
         promotions.add(applePromotion);
         return this;
     }
