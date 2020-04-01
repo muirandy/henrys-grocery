@@ -8,7 +8,7 @@ public class Basket {
 
     public void add(int quantity, Item item) {
         for (int i = 0; i < quantity; i++)
-            total = total.add(BigDecimal.valueOf(1.30));
+            total = total.add(BigDecimal.valueOf(item.price));
     }
 
     public BigDecimal priceUp() {

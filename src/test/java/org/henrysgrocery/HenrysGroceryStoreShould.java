@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class HenrysGroceryStoreShould {
-    private static final Item MILK = new Item(Unit.BOTTLE, "Milk");
+    private static final Item MILK = new Item(Unit.BOTTLE, "Milk", 1.30);
+    private static final Item APPLE = new Item(Unit.SINGLE, "Apples", 0.10);
 
     private Basket basket = new Basket();
 
@@ -37,5 +38,15 @@ class HenrysGroceryStoreShould {
         BigDecimal total = basket.priceUp();
 
         assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(3.90));
+    }
+
+    @Test
+    void differentItems() {
+        basket.add(1, MILK);
+        basket.add(1, APPLE);
+
+        BigDecimal total = basket.priceUp();
+
+        assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(1.40));
     }
 }
