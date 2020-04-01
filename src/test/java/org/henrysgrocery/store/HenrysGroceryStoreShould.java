@@ -20,11 +20,11 @@ class HenrysGroceryStoreShould {
     private static final LocalDate END_OF_NEXT_MONTH = TODAY.plusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
     private static final LocalDate DAY_AFTER_END_OF_NEXT_MONTH = END_OF_NEXT_MONTH.plusDays(1);
 
-    private static final BasketPricer BASKET_PRICER_TODAY = BasketPricer.forDay(TODAY);
-    private static final BasketPricer BASKET_PRICER_TWO_DAYS_HENCE = BasketPricer.forDay(TWO_DAYS_HENCE);
-    private static final BasketPricer BASKET_PRICER_THREE_DAYS_HENCE = BasketPricer.forDay(THREE_DAYS_HENCE);
-    private static final BasketPricer BASKET_PRICER_END_OF_NEXT_MONTH = BasketPricer.forDay(END_OF_NEXT_MONTH);
-    private static final BasketPricer BASKET_PRICER_DAY_AFTER_END_OF_NEXT_MONTH = BasketPricer.forDay(DAY_AFTER_END_OF_NEXT_MONTH);
+    private static final BasketPricer BASKET_PRICER_TODAY = BasketPricerCreator.forDay(TODAY);
+    private static final BasketPricer BASKET_PRICER_TWO_DAYS_HENCE = BasketPricerCreator.forDay(TWO_DAYS_HENCE);
+    private static final BasketPricer BASKET_PRICER_THREE_DAYS_HENCE = BasketPricerCreator.forDay(THREE_DAYS_HENCE);
+    private static final BasketPricer BASKET_PRICER_END_OF_NEXT_MONTH = BasketPricerCreator.forDay(END_OF_NEXT_MONTH);
+    private static final BasketPricer BASKET_PRICER_DAY_AFTER_END_OF_NEXT_MONTH = BasketPricerCreator.forDay(DAY_AFTER_END_OF_NEXT_MONTH);
 
 
     private Basket basket = Basket.create();
@@ -106,6 +106,16 @@ class HenrysGroceryStoreShould {
                                 .add(4, SOUP)
                                 .add(1, BREAD)
                                 .priceUp(BASKET_PRICER_TODAY), 3.00);
+    }
+
+    @Test
+    void multiPromotions() {
+        assertBasketValue(Basket.create()
+                                .add(2, SOUP)
+                                .add(1, BREAD)
+                                .add(1, APPLE)
+                                .priceUp(BASKET_PRICER_THREE_DAYS_HENCE), 1.79);
+
     }
 
     private void assertBasketValue(BigDecimal total, double val) {
