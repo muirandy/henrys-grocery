@@ -3,13 +3,13 @@ package org.henrysgrocery.store;
 import java.math.BigDecimal;
 
 public class Item {
-    final Unit bottle;
-    final String milk;
+    final Unit unit;
+    final String name;
     final BigDecimal price;
 
-    public Item(Unit bottle, String milk, double price) {
-        this.bottle = bottle;
-        this.milk = milk;
+    public Item(Unit unit, String name, double price) {
+        this.unit = unit;
+        this.name = name;
         this.price = BigDecimal.valueOf(price);
     }
 }

@@ -47,5 +47,4 @@ class BasketPricer {
                   .map(p -> p.apply(items))
                   .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-
 }
