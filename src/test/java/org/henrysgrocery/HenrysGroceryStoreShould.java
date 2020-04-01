@@ -29,4 +29,13 @@ class HenrysGroceryStoreShould {
 
         assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(1.30));
     }
+
+    @Test
+    void multipleMilk() {
+        basket.add(3, MILK);
+
+        BigDecimal total = basket.priceUp();
+
+        assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(3.90));
+    }
 }
