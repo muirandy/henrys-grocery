@@ -1,8 +1,8 @@
 package org.henrysgrocery;
 
-import org.henrysgrocery.store.Basket;
-import org.henrysgrocery.store.Item;
-import org.henrysgrocery.store.Unit;
+import store.Basket;
+import store.Item;
+import store.Unit;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

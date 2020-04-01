@@ -1,4 +1,4 @@
-package org.henrysgrocery.store;
+package store;
 
 import java.math.BigDecimal;
 
