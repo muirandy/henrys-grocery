@@ -9,7 +9,7 @@ public class ApplePromotion implements Promotion {
     @Override
     public BigDecimal apply(List<Item> items) {
         long numberOfApples = items.stream()
-                           .filter(i -> i.name.equals("Apples"))
+                           .filter(i -> i.name.equals("apples"))
                            .count();
         return BigDecimal.valueOf(0.01).multiply(BigDecimal.valueOf(numberOfApples));
     }

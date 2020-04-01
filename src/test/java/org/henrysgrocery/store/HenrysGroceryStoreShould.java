@@ -9,8 +9,8 @@ import java.time.temporal.TemporalAdjusters;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class HenrysGroceryStoreShould {
-    private static final Item MILK = new Item(Unit.BOTTLE, "Milk", 1.30);
-    private static final Item APPLE = new Item(Unit.SINGLE, "Apples", 0.10);
+    private static final Item MILK = new Item(Unit.BOTTLE, "milk", 1.30);
+    private static final Item APPLE = new Item(Unit.SINGLE, "apples", 0.10);
     private static final Item BREAD = new Item(Unit.LOAF, "bread", 0.80);
     private static final Item SOUP = new Item(Unit.TIN, "soup", 0.65);
 
