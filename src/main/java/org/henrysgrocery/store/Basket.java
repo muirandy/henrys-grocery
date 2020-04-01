@@ -1,7 +1,6 @@
 package org.henrysgrocery.store;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +20,7 @@ public class Basket {
         return this;
     }
 
-    public BigDecimal priceUp(LocalDate purchaseDate) {
-        return new BasketPricer(purchaseDate).priceUp(items.stream());
+    public BigDecimal priceUp(BasketPricer basketPricer) {
+        return basketPricer.priceUp(items.stream());
     }
-
 }

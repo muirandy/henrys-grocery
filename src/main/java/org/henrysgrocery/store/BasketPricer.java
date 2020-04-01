@@ -7,9 +7,13 @@ import java.util.stream.Stream;
 
 class BasketPricer {
 
+    public static BasketPricer forDay(LocalDate today) {
+        return new BasketPricer(today);
+    }
+
     private LocalDate purchaseDate;
 
-    public BasketPricer(LocalDate purchaseDate) {
+    private BasketPricer(LocalDate purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
