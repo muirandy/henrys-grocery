@@ -29,43 +29,33 @@ class HenrysGroceryStoreShould {
     private static final BasketPricer BASKET_PRICER_DAY_AFTER_END_OF_NEXT_MONTH = BasketPricerCreator.forDay(DAY_AFTER_END_OF_NEXT_MONTH);
 
 
-    private Basket basket = Basket.create();
-
     @Test
     void emptyBasket() {
-        BigDecimal total = basket.priceUp(BASKET_PRICER_TODAY);
-
-        assertBasketValue(total, 0);
+        assertBasketValue(Basket.create().priceUp(BASKET_PRICER_TODAY), 0);
     }
 
     @Test
     void singleMilk() {
-        BigDecimal total = basket.add(1, MILK)
-                                 .priceUp(BASKET_PRICER_TODAY);
-
-        assertBasketValue(total, 1.30);
+        assertBasketValue(Basket.create().add(1, MILK)
+                                .priceUp(BASKET_PRICER_TODAY), 1.30);
     }
 
     @Test
     void multipleMilk() {
-        BigDecimal total = basket.add(3, MILK)
-                                 .priceUp(BASKET_PRICER_TODAY);
-
-        assertBasketValue(total, 3.90);
+        assertBasketValue(Basket.create().add(3, MILK)
+                                .priceUp(BASKET_PRICER_TODAY), 3.90);
     }
 
     @Test
     void differentItems() {
-        BigDecimal total = basket.add(1, MILK)
-                                 .add(1, APPLE)
-                                 .priceUp(BASKET_PRICER_TODAY);
-
-        assertBasketValue(total, 1.40);
+        assertBasketValue(Basket.create().add(1, MILK)
+                                .add(1, APPLE)
+                                .priceUp(BASKET_PRICER_TODAY), 1.40);
     }
 
     @Test
     void discountedApple() {
-        assertBasketValue(basket.add(1, APPLE)
+        assertBasketValue(Basket.create().add(1, APPLE)
                                 .priceUp(BASKET_PRICER_THREE_DAYS_HENCE), 0.09);
         assertBasketValue(Basket.create()
                                 .add(1, APPLE)
@@ -74,7 +64,7 @@ class HenrysGroceryStoreShould {
 
     @Test
     void fullPriceApples() {
-        assertBasketValue(basket.add(1, APPLE)
+        assertBasketValue(Basket.create().add(1, APPLE)
                                 .priceUp(BASKET_PRICER_TODAY), 0.10);
         assertBasketValue(Basket.create()
                                 .add(1, APPLE)
@@ -86,7 +76,7 @@ class HenrysGroceryStoreShould {
 
     @Test
     void fullPriceBread() {
-        assertBasketValue(basket.add(1, BREAD)
+        assertBasketValue(Basket.create().add(1, BREAD)
                                 .add(1, SOUP)
                                 .priceUp(BASKET_PRICER_TODAY), 1.45);
         assertBasketValue(Basket.create()
@@ -153,7 +143,7 @@ class HenrysGroceryStoreShould {
                                 .priceUp(BASKET_PRICER_FIVE_DAYS_HENCE), 1.97);
     }
 
-    private void assertBasketValue(BigDecimal total, double val) {
-        assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(val));
+    private void assertBasketValue(BigDecimal total, double expected) {
+        assertThat(total).isEqualByComparingTo(BigDecimal.valueOf(expected));
     }
 }
