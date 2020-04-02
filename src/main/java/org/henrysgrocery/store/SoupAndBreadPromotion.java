@@ -3,29 +3,25 @@ package org.henrysgrocery.store;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class SoupAndBreadPromotion extends DateRangePromotion {
-    private static final BigDecimal ONE_HUNDREDTH = BigDecimal.valueOf(0.01);
-
-    private ProductCatalog productCatalog = ProductCatalog.createProductCatalog();
     private Item triggerItem;
     private int triggerQuantity;
     private Item targetItem;
-    private double targetPercentageDiscount;
-    private BigDecimal discountMultiplier;
+    private Promotion applicablePromotion;
 
     SoupAndBreadPromotion(LocalDate startDate,
                           LocalDate endDate,
                           Item triggerItem,
                           int triggerQuantity,
                           Item targetItem,
-                          double targetPercentageDiscount) {
+                          Promotion applicablePromotion) {
         super(startDate, endDate);
         this.triggerItem = triggerItem;
         this.triggerQuantity = triggerQuantity;
         this.targetItem = targetItem;
-        this.targetPercentageDiscount = targetPercentageDiscount;
-        discountMultiplier = BigDecimal.valueOf(targetPercentageDiscount).multiply(ONE_HUNDREDTH);
+        this.applicablePromotion = applicablePromotion;
     }
 
     @Override
@@ -39,11 +35,10 @@ class SoupAndBreadPromotion extends DateRangePromotion {
     }
 
     private BigDecimal calculateDiscountedAmount(List<Item> items, long promotionRepeats) {
-        return items.stream()
-                    .filter(i -> i.equals(targetItem))
-                    .limit(promotionRepeats)
-                    .map(i -> productCatalog.getPrice(i))
-                    .map(p -> p.multiply(discountMultiplier))
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        List<Item> itemsToDiscount = items.stream()
+                                  .filter(i -> i.equals(targetItem))
+                                  .limit(promotionRepeats)
+                                  .collect(Collectors.toList());
+        return applicablePromotion.calculateTotalDiscount(itemsToDiscount);
     }
 }

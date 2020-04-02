@@ -16,7 +16,8 @@ class PromotionFactory {
         LocalDate endDate = startDate.plusDays(7);
         Item triggerItem = productCatalog.getItem(TIN, SOUP);
         Item targetItem = productCatalog.getItem(LOAF, BREAD);
-        return new SoupAndBreadPromotion(startDate, endDate, triggerItem, 2, targetItem, 50);
+        Promotion fixedPercentagePromotion = new FixedPercentagePromotion(startDate, endDate, targetItem, 50);
+        return new SoupAndBreadPromotion(startDate, endDate, triggerItem, 2, targetItem, fixedPercentagePromotion);
     }
 
     static FixedPercentagePromotion createApplePromotion() {
