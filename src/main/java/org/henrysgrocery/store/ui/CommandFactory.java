@@ -11,6 +11,7 @@ public class CommandFactory {
     static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
     static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
     private static final String USAGE = "HELP";
+    private static final String CATALOG = "CATALOG";
     private PrintStream out;
     private Basket basket = Basket.create();
 
@@ -25,6 +26,8 @@ public class CommandFactory {
             return createPriceUpCommand();
         if (isUsageCommand(command))
             return createUsageCommand();
+        if (isCatalogCommand(command))
+            return createCatalogCommand();
         return createInvalidCommand();
     }
 
@@ -52,6 +55,14 @@ public class CommandFactory {
 
     private Command createUsageCommand() {
         return new UsageCommand(out);
+    }
+
+    private boolean isCatalogCommand(String command) {
+        return CATALOG.equalsIgnoreCase(command);
+    }
+
+    private Command createCatalogCommand() {
+        return new CatalogCommand(out);
     }
 
     private Command createInvalidCommand() {

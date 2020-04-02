@@ -1,5 +1,7 @@
 package org.henrysgrocery.store.ui;
 
+import org.henrysgrocery.store.Item;
+import org.henrysgrocery.store.ProductCatalog;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -7,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -137,6 +140,15 @@ class CommandLineInterfaceTest {
         assertUsage();
     }
 
+    @Test
+    void catalog() {
+        inputStream = createInputStream("catalog");
+
+        commandLineInterface.run(inputStream, printStream);
+
+        assertCatalog();
+    }
+
     private ByteArrayInputStream createInputStream(String... lines) {
         String input = Arrays.stream(lines)
                              .collect(Collectors.joining(System.lineSeparator()));
@@ -154,5 +166,15 @@ class CommandLineInterfaceTest {
     private void assertUsage() {
         String actual = outputStream.toString();
         assertThat(actual).isEqualToIgnoringNewLines(HEADING + USAGE);
+    }
+
+    private void assertCatalog() {
+        String actual = outputStream.toString();
+        List<Item> itemsInInventory = ProductCatalog.createProductCatalog().inventory();
+        String inventory = itemsInInventory.stream()
+                                           .map(i -> String.format("Name: %s Unit: %s", i.name, i.unit.name().toLowerCase()))
+                                           .collect(Collectors.joining(System.lineSeparator()));
+        assertThat(actual).isEqualToIgnoringNewLines(HEADING + inventory);
+
     }
 }

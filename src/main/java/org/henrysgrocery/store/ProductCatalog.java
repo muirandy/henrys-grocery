@@ -1,7 +1,10 @@
 package org.henrysgrocery.store;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.henrysgrocery.store.Unit.*;
 
@@ -34,6 +37,12 @@ public class ProductCatalog {
         if (!catalog.containsKey(new Item(unit, name)))
             throw new InvalidProductException();
         return new Item(unit, name);
+    }
+
+    public List<Item> inventory() {
+        return catalog.keySet().stream()
+                      .sorted(Comparator.comparing(i -> i.name))
+                      .collect(Collectors.toList());
     }
 
     public class InvalidProductException extends RuntimeException {
