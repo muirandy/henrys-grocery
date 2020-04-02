@@ -10,14 +10,14 @@ class PromotionFactory {
 
     private static ProductCatalog productCatalog = createProductCatalog();
 
-    static SoupAndBreadPromotion createSoupAndBreadPromotion() {
+    static TriggerAndTargetPromotion createSoupAndBreadPromotion() {
         LocalDate today = LocalDate.now();
         LocalDate startDate = today.minusDays(1);
         LocalDate endDate = startDate.plusDays(7);
         Item triggerItem = productCatalog.getItem(TIN, SOUP);
         Item targetItem = productCatalog.getItem(LOAF, BREAD);
         Promotion fixedPercentagePromotion = new FixedPercentagePromotion(startDate, endDate, targetItem, 50);
-        return new SoupAndBreadPromotion(startDate, endDate, triggerItem, 2, targetItem, fixedPercentagePromotion);
+        return new TriggerAndTargetPromotion(startDate, endDate, triggerItem, 2, targetItem, fixedPercentagePromotion);
     }
 
     static FixedPercentagePromotion createApplePromotion() {

@@ -5,18 +5,18 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class SoupAndBreadPromotion extends DateRangePromotion {
+class TriggerAndTargetPromotion extends DateRangePromotion {
     private Item triggerItem;
     private int triggerQuantity;
     private Item targetItem;
     private Promotion applicablePromotion;
 
-    SoupAndBreadPromotion(LocalDate startDate,
-                          LocalDate endDate,
-                          Item triggerItem,
-                          int triggerQuantity,
-                          Item targetItem,
-                          Promotion applicablePromotion) {
+    TriggerAndTargetPromotion(LocalDate startDate,
+                              LocalDate endDate,
+                              Item triggerItem,
+                              int triggerQuantity,
+                              Item targetItem,
+                              Promotion applicablePromotion) {
         super(startDate, endDate);
         this.triggerItem = triggerItem;
         this.triggerQuantity = triggerQuantity;
