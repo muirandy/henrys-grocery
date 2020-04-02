@@ -11,19 +11,6 @@ class CommandFactory {
 
     static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
     private static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
-    private static final String USAGE_MESSAGE =
-            "Add an item to the basket:" + System.lineSeparator()
-                    + "  add <quantity> <unit> <item>" + System.lineSeparator()
-                    + "    eg: add 3 single apples" + System.lineSeparator()
-                    + "Price up the basket:" + System.lineSeparator()
-                    + "  price [+/- daysOffset]" + System.lineSeparator()
-                    + "    eg: price" + System.lineSeparator()
-                    + "    eg: price +5" + System.lineSeparator()
-                    + "    eg: price -1" + System.lineSeparator()
-                    + "Display this message:" + System.lineSeparator()
-                    + "  usage" + System.lineSeparator()
-                    + "Quit:" + System.lineSeparator()
-                    + "  quit";
 
     private PrintStream out;
     private Basket basket = Basket.create();
@@ -36,9 +23,9 @@ class CommandFactory {
         if (isAddCommand(command))
             createAddCommand().execute(command);
         else if (isPriceUpCommand(command))
-            processPriceUpCommand(command).execute(command);
+            createPriceUpCommand(command).execute(command);
         else if (isUsageCommand(command))
-            processUsageCommand();
+            createUsageCommand().execute(command);
         else
             processInvalidCommand();
     }
@@ -57,7 +44,7 @@ class CommandFactory {
         return matcher.find();
     }
 
-    private Command processPriceUpCommand(String command) {
+    private Command createPriceUpCommand(String command) {
         return new PriceUpCommand(this, out, basket);
     }
 
@@ -65,8 +52,8 @@ class CommandFactory {
         return USAGE.equalsIgnoreCase(command);
     }
 
-    private void processUsageCommand() {
-        out.println(USAGE_MESSAGE);
+    private Command createUsageCommand() {
+        return new UsageCommand(out);
     }
 
     private void processInvalidCommand() {
