@@ -15,7 +15,7 @@ class SoupAndBreadPromotion extends DateRangePromotion {
     }
 
     @Override
-    public BigDecimal apply(List<Item> items) {
+    public BigDecimal calculateTotalDiscount(List<Item> items) {
         long numberOfSoups = items.stream()
                                   .filter(i -> i.name.equals(ProductCatalog.SOUP))
                                   .count();

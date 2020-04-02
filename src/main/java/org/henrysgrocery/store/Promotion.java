@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 interface Promotion {
-    BigDecimal apply(List<Item> items);
+    BigDecimal calculateTotalDiscount(List<Item> items);
 
     boolean applies(LocalDate purchaseDate);
 }

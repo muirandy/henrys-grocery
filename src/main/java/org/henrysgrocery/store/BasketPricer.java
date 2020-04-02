@@ -22,7 +22,7 @@ class BasketPricer {
 
     private BigDecimal calculateDiscount(List<Item> items) {
         return promotions.stream()
-                         .map(p -> p.apply(items))
+                         .map(p -> p.calculateTotalDiscount(items))
                          .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

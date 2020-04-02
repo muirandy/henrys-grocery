@@ -20,7 +20,7 @@ class FixedPercentagePromotion extends DateRangePromotion {
     }
 
     @Override
-    public BigDecimal apply(List<Item> items) {
+    public BigDecimal calculateTotalDiscount(List<Item> items) {
         return items.stream()
              .filter(i -> i.equals(targetItem))
              .map(i -> productCatalog.getPrice(i))
