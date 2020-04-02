@@ -13,8 +13,11 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class CommandLineInterfaceTest {
 
-    private static final String HEADING = "Henrys Store";
-    private static final String INVALID_ITEM = "Invalid Item";
+    private static final String HEADING = "--Henrys Store--";
+    private static final String INVALID_ITEM = "--Invalid Item";
+    private static final String EXIT_MESSAGE = "--Exit";
+    private static final String TOTAL_BASKET_COST_MESSAGE = "--Total Basket Cost: ";
+    private static final String ADDED_MESSAGE = "--Added ";
 
     private CommandLineInterface commandLineInterface = new CommandLineInterface();
     private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -37,7 +40,7 @@ class CommandLineInterfaceTest {
 
         commandLineInterface.run(inputStream, printStream);
 
-        assertLastConsoleOutput("Exit");
+        assertLastConsoleOutput(EXIT_MESSAGE);
     }
 
     @Test
@@ -76,7 +79,7 @@ class CommandLineInterfaceTest {
 
         commandLineInterface.run(inputStream, printStream);
 
-        assertLastConsoleOutput("Added 2 single apples");
+        assertLastConsoleOutput(ADDED_MESSAGE + "2 single apples");
     }
 
     @Test
@@ -85,7 +88,7 @@ class CommandLineInterfaceTest {
 
         commandLineInterface.run(inputStream, printStream);
 
-        assertLastConsoleOutput("Total Basket Cost: 0.00");
+        assertLastConsoleOutput(TOTAL_BASKET_COST_MESSAGE + "0.00");
     }
 
     @Test
@@ -97,7 +100,7 @@ class CommandLineInterfaceTest {
 
         commandLineInterface.run(inputStream, printStream);
 
-        assertLastConsoleOutput("Total Basket Cost: 1.40");
+        assertLastConsoleOutput(TOTAL_BASKET_COST_MESSAGE + "1.40");
     }
 
     @Test
@@ -109,7 +112,7 @@ class CommandLineInterfaceTest {
 
         commandLineInterface.run(inputStream, printStream);
 
-        assertLastConsoleOutput("Total Basket Cost: 1.39");
+        assertLastConsoleOutput(TOTAL_BASKET_COST_MESSAGE + "1.39");
     }
 
     private ByteArrayInputStream createInputStream(String... lines) {

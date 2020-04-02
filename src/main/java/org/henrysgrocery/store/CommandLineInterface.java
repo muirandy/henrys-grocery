@@ -15,6 +15,12 @@ public class CommandLineInterface {
     private static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
     private static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
 
+    private static final String HEADER = "--Henrys Store--";
+    private static final String INVALID_ITEM = "--Invalid Item";
+    private static final String ADD_TO_BASKET_MESSAGE = "--Added %d %s %s";
+    private static final String PRICE_UP_MESSAGE = "--Total Basket Cost: ";
+    private static final String EXIT_MESSAGE = "--Exit";
+
     private PrintStream out;
     private Scanner scanner;
     private Basket basket;
@@ -41,7 +47,7 @@ public class CommandLineInterface {
     }
 
     private void displayHeading(PrintStream out) {
-        out.println("Henrys Store");
+        out.println(HEADER);
     }
 
     private boolean isQuitCommand(String input) {
@@ -49,7 +55,7 @@ public class CommandLineInterface {
     }
 
     private void displayQuitMessage() {
-        out.println("Exit");
+        out.println(EXIT_MESSAGE);
     }
 
     private void processCommand(String command) {
@@ -68,7 +74,7 @@ public class CommandLineInterface {
         try {
             addItemToBasket(addCommand);
         } catch (ProductCatalog.InvalidProductException | IllegalArgumentException e) {
-            out.println("Invalid Item");
+            out.println(INVALID_ITEM);
         }
     }
 
@@ -107,7 +113,7 @@ public class CommandLineInterface {
     }
 
     private void acknowledgeItemAdded(int quantity, Item item) {
-        String message = String.format("Added %d %s %s", quantity, item.unit.name().toLowerCase(), item.name);
+        String message = String.format(ADD_TO_BASKET_MESSAGE, quantity, item.unit.name().toLowerCase(), item.name);
         out.println(message);
     }
 
@@ -136,6 +142,6 @@ public class CommandLineInterface {
 
     private void displayBasketTotal(BigDecimal total) {
         total = total.setScale(2, RoundingMode.CEILING);
-        out.println("Total Basket Cost: " + total);
+        out.println(PRICE_UP_MESSAGE + total);
     }
 }
