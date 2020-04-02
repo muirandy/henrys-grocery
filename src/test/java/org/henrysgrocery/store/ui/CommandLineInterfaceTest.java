@@ -16,7 +16,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class CommandLineInterfaceTest {
 
-    private static final String HEADING = "--Henrys Store--";
+    private static final String HEADING = "-- Henrys Store (type help for more information) --";
     private static final String USAGE =
             "Add an item to the basket:" + System.lineSeparator()
                     + "  add <quantity> <unit> <item>" + System.lineSeparator()

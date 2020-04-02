@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class CommandLineInterface {
     private static final String QUIT = "QUIT";
 
-    private static final String HEADER = "--Henrys Store--";
+    private static final String HEADER = "-- Henrys Store (type help for more information) --";
     private static final String EXIT_MESSAGE = "--Exit";
 
 
