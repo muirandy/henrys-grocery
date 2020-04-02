@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 class CommandFactory {
 
     private static final String USAGE = "HELP";
-    private static final String INVALID_ITEM = "--Invalid Item";
+
 
     static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
     private static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
@@ -27,7 +27,7 @@ class CommandFactory {
         else if (isUsageCommand(command))
             createUsageCommand().execute(command);
         else
-            processInvalidCommand();
+            processInvalidCommand().execute(command);
     }
 
     private boolean isAddCommand(String command) {
@@ -56,8 +56,8 @@ class CommandFactory {
         return new UsageCommand(out);
     }
 
-    private void processInvalidCommand() {
-        out.println(INVALID_ITEM);
+    private Command processInvalidCommand() {
+        return new InvalidCommand(out);
     }
 
     Matcher obtainPriceUpMatcher(String addCommand) {
