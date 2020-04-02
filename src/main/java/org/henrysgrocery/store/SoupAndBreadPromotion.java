@@ -13,12 +13,12 @@ public class SoupAndBreadPromotion implements Promotion {
     @Override
     public BigDecimal apply(List<Item> items) {
         long numberOfSoups = items.stream()
-                                  .filter(i -> i.name.equals("soup"))
+                                  .filter(i -> i.name.equals(ProductCatalog.SOUP))
                                   .count();
         long promotionRepeats = numberOfSoups / 2;
 
         BigDecimal costWithoutDiscount = items.stream()
-                                .filter(i -> i.name.equals("bread"))
+                                .filter(i -> i.name.equals(ProductCatalog.BREAD))
                                 .limit(promotionRepeats)
                                 .map(i -> productCatalog.getPrice(i))
                                 .reduce(BigDecimal.ZERO, BigDecimal::add);

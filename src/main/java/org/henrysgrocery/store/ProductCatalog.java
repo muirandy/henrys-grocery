@@ -4,6 +4,12 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public class ProductCatalog {
+
+    public static final String SOUP = "soup";
+    public static final String BREAD = "bread";
+    public static final String MILK = "milk";
+    public static final String APPLES = "apples";
+
     public static ProductCatalog createProductCatalog() {
         return new ProductCatalog();
     }
@@ -12,10 +18,10 @@ public class ProductCatalog {
     }
 
     private Map<Item, BigDecimal> catalog = Map.of(
-            new Item(Unit.TIN, "soup"), BigDecimal.valueOf(0.65),
-            new Item(Unit.LOAF, "bread"), BigDecimal.valueOf(0.80),
-            new Item(Unit.BOTTLE, "milk"), BigDecimal.valueOf(1.30),
-            new Item(Unit.SINGLE, "apples"), BigDecimal.valueOf(0.10)
+            new Item(Unit.TIN, SOUP), BigDecimal.valueOf(0.65),
+            new Item(Unit.LOAF, BREAD), BigDecimal.valueOf(0.80),
+            new Item(Unit.BOTTLE, MILK), BigDecimal.valueOf(1.30),
+            new Item(Unit.SINGLE, APPLES), BigDecimal.valueOf(0.10)
     );
 
     public BigDecimal getPrice(Item item) {
@@ -23,7 +29,6 @@ public class ProductCatalog {
     }
 
     public Item getItem(Unit unit, String name) {
-        Item requestedItem = new Item(unit, name);
-        return requestedItem;
+        return new Item(unit, name);
     }
 }
