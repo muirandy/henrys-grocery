@@ -3,6 +3,8 @@ package org.henrysgrocery.store;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import static org.henrysgrocery.store.Unit.*;
+
 public class ProductCatalog {
 
     public static final String SOUP = "soup";
@@ -18,10 +20,10 @@ public class ProductCatalog {
     }
 
     private Map<Item, BigDecimal> catalog = Map.of(
-            new Item(Unit.TIN, SOUP), BigDecimal.valueOf(0.65),
-            new Item(Unit.LOAF, BREAD), BigDecimal.valueOf(0.80),
-            new Item(Unit.BOTTLE, MILK), BigDecimal.valueOf(1.30),
-            new Item(Unit.SINGLE, APPLES), BigDecimal.valueOf(0.10)
+            new Item(TIN, SOUP), BigDecimal.valueOf(0.65),
+            new Item(LOAF, BREAD), BigDecimal.valueOf(0.80),
+            new Item(BOTTLE, MILK), BigDecimal.valueOf(1.30),
+            new Item(SINGLE, APPLES), BigDecimal.valueOf(0.10)
     );
 
     public BigDecimal getPrice(Item item) {
