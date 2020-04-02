@@ -1,10 +1,6 @@
 package org.henrysgrocery.store;
 
 import java.io.PrintStream;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,7 +9,6 @@ class CommandFactory {
     private static final String USAGE = "HELP";
     private static final String INVALID_ITEM = "--Invalid Item";
 
-    private static final String PRICE_UP_MESSAGE = "--Total Basket Cost: ";
     static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
     private static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
     private static final String USAGE_MESSAGE =
@@ -39,9 +34,9 @@ class CommandFactory {
 
     public void invoke(String command) {
         if (isAddCommand(command))
-            processAddCommand(basket).execute(command);
+            createAddCommand().execute(command);
         else if (isPriceUpCommand(command))
-            processPriceUpCommand(command);
+            processPriceUpCommand(command).execute(command);
         else if (isUsageCommand(command))
             processUsageCommand();
         else
@@ -53,7 +48,7 @@ class CommandFactory {
         return matcher.find();
     }
 
-    private Command processAddCommand(Basket basket) {
+    private Command createAddCommand() {
         return new AddCommand(out, basket);
     }
 
@@ -62,11 +57,8 @@ class CommandFactory {
         return matcher.find();
     }
 
-    private void processPriceUpCommand(String command) {
-        long purchaseDaysOffset = readPurchaseDaysOffset(command);
-        LocalDate purchaseDate = LocalDate.now().plusDays(purchaseDaysOffset);
-        BigDecimal total = basket.priceUp(BasketPricerCreator.forDay(purchaseDate));
-        displayBasketTotal(total);
+    private Command processPriceUpCommand(String command) {
+        return new PriceUpCommand(this, out, basket);
     }
 
     private boolean isUsageCommand(String command) {
@@ -81,20 +73,8 @@ class CommandFactory {
         out.println(INVALID_ITEM);
     }
 
-    private Matcher obtainPriceUpMatcher(String addCommand) {
+    Matcher obtainPriceUpMatcher(String addCommand) {
         return PRICE_UP.matcher(addCommand);
-    }
-
-    private long readPurchaseDaysOffset(String command) {
-        Matcher matcher = obtainPriceUpMatcher(command);
-        matcher.find();
-        String daysOffset = Optional.ofNullable(matcher.group(1)).orElse("0");
-        return Long.parseLong(daysOffset.trim());
-    }
-
-    private void displayBasketTotal(BigDecimal total) {
-        total = total.setScale(2, RoundingMode.CEILING);
-        out.println(PRICE_UP_MESSAGE + total);
     }
 
 
