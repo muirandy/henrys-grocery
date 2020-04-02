@@ -8,6 +8,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class CommandLineInterfaceTest {
 
+    private static final String HEADING = "Henrys Store";
     private CommandLineInterface commandLineInterface = new CommandLineInterface();
     private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private PrintStream printStream = new PrintStream(outputStream);
@@ -20,7 +21,7 @@ class CommandLineInterfaceTest {
 
         commandLineInterface.run(inputStream, printStream);
 
-        assertLastConsoleOutput("Henrys Store");
+        assertLastConsoleOutput(HEADING);
     }
 
     @Test
@@ -30,6 +31,15 @@ class CommandLineInterfaceTest {
         commandLineInterface.run(inputStream, printStream);
 
         assertLastConsoleOutput("Exit");
+    }
+
+    @Test
+    void ignoresInvalidCommands() {
+        inputStream = createInputStream("invalid");
+
+        commandLineInterface.run(inputStream, printStream);
+
+        assertLastConsoleOutput(HEADING);
     }
 
     private ByteArrayInputStream createInputStream(String s) {
