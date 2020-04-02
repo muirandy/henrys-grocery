@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
 public class CommandLineInterface {
     private static final String QUIT = "QUIT";
     private static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
-    private static final Pattern PRICE_UP = Pattern.compile("price");
+    private static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
 
     private PrintStream out;
     private Scanner scanner;
@@ -55,7 +56,7 @@ public class CommandLineInterface {
         if (isAddCommand(command))
             processAddCommand(command);
         if (isPriceUpCommand(command))
-            processPriceUpCommand();
+            processPriceUpCommand(command);
     }
 
     private boolean isAddCommand(String command) {
@@ -119,9 +120,18 @@ public class CommandLineInterface {
         return PRICE_UP.matcher(addCommand);
     }
 
-    private void processPriceUpCommand() {
-        BigDecimal total = basket.priceUp(BasketPricerCreator.forDay(LocalDate.now()));
+    private void processPriceUpCommand(String command) {
+        long purchaseDaysOffset = readPurchaseDaysOffset(command);
+        LocalDate purchaseDate = LocalDate.now().plusDays(purchaseDaysOffset);
+        BigDecimal total = basket.priceUp(BasketPricerCreator.forDay(purchaseDate));
         displayBasketTotal(total);
+    }
+
+    private long readPurchaseDaysOffset(String command) {
+        Matcher matcher = obtainPriceUpMatcher(command);
+        matcher.find();
+        String daysOffset = Optional.ofNullable(matcher.group(1)).orElse("0");
+        return Long.parseLong(daysOffset.trim());
     }
 
     private void displayBasketTotal(BigDecimal total) {

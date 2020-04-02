@@ -100,6 +100,18 @@ class CommandLineInterfaceTest {
         assertLastConsoleOutput("Total Basket Cost: 1.40");
     }
 
+    @Test
+    void totalItemsAtStartOfOffer() {
+        inputStream = createInputStream(
+                "add 1 bottle milk",
+                "add 1 single apples",
+                "price +3");
+
+        commandLineInterface.run(inputStream, printStream);
+
+        assertLastConsoleOutput("Total Basket Cost: 1.39");
+    }
+
     private ByteArrayInputStream createInputStream(String... lines) {
         String input = Arrays.stream(lines)
                                .collect(Collectors.joining(System.lineSeparator()));
