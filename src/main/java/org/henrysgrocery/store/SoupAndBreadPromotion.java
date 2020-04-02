@@ -21,13 +21,15 @@ class SoupAndBreadPromotion extends DateRangePromotion {
                                   .count();
         long promotionRepeats = numberOfSoups / 2;
 
-        BigDecimal costWithoutDiscount = items.stream()
-                                .filter(i -> i.name.equals(ProductCatalog.BREAD))
-                                .limit(promotionRepeats)
-                                .map(i -> productCatalog.getPrice(i))
-                                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        return costWithoutDiscount.multiply(BigDecimal.valueOf(DISCOUNT_MULTIPLIER));
+        return calculateDiscountedAmount(items, promotionRepeats);
     }
 
+    private BigDecimal calculateDiscountedAmount(List<Item> items, long promotionRepeats) {
+        return items.stream()
+                    .filter(i -> i.name.equals(ProductCatalog.BREAD))
+                    .limit(promotionRepeats)
+                    .map(i -> productCatalog.getPrice(i))
+                    .map(p -> p.multiply(BigDecimal.valueOf(DISCOUNT_MULTIPLIER)))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 }
