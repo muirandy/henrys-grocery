@@ -6,14 +6,17 @@ import java.util.List;
 
 class ApplePromotion extends DateRangePromotion {
 
-    ApplePromotion(LocalDate startDate, LocalDate endDate) {
+    private final Item targetItem;
+
+    ApplePromotion(LocalDate startDate, LocalDate endDate, Item targetItem) {
         super(startDate, endDate);
+        this.targetItem = targetItem;
     }
 
     @Override
     public BigDecimal apply(List<Item> items) {
         long numberOfApples = items.stream()
-                           .filter(i -> i.name.equals(ProductCatalog.APPLES))
+                           .filter(i -> i.equals(targetItem))
                            .count();
         return BigDecimal.valueOf(0.01).multiply(BigDecimal.valueOf(numberOfApples));
     }

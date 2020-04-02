@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BasketPricerCreator {
+    private static ProductCatalog productCatalog = ProductCatalog.createProductCatalog();
+
     public static BasketPricer forDay(LocalDate today) {
         List<Promotion> promotions = new ArrayList<>();
         Promotion applePromotion = createApplePromotion();
@@ -31,6 +33,7 @@ public class BasketPricerCreator {
         LocalDate today = LocalDate.now();
         LocalDate startDate = today.plusDays(3);
         LocalDate endDate = today.plusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
-        return new ApplePromotion(startDate, endDate);
+        Item targetItem = productCatalog.getItem(Unit.SINGLE, ProductCatalog.APPLES);
+        return new ApplePromotion(startDate, endDate, targetItem);
     }
 }
