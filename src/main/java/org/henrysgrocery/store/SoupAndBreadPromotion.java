@@ -8,7 +8,7 @@ public class SoupAndBreadPromotion implements Promotion {
 
     private static final double DISCOUNT_MULTIPLIER = 0.5;
 
-    private ProductCatalog productCatalog = ProductCatalog.createPriceService();
+    private ProductCatalog productCatalog = ProductCatalog.createProductCatalog();
 
     @Override
     public BigDecimal apply(List<Item> items) {

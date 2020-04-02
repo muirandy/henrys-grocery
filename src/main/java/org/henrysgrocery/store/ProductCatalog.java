@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public class ProductCatalog {
-    public static ProductCatalog createPriceService() {
+    public static ProductCatalog createProductCatalog() {
         return new ProductCatalog();
     }
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 class BasketPricer {
 
-    private ProductCatalog productCatalog = ProductCatalog.createPriceService();
+    private ProductCatalog productCatalog = ProductCatalog.createProductCatalog();
     private List<Promotion> promotions;
 
     BasketPricer(List<Promotion> promotions) {
