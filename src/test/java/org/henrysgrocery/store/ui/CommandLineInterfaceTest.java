@@ -27,7 +27,7 @@ class CommandLineInterfaceTest {
                     + "    eg: price +5" + System.lineSeparator()
                     + "    eg: price -1" + System.lineSeparator()
                     + "Display this message:" + System.lineSeparator()
-                    + "  usage" + System.lineSeparator()
+                    + "  help" + System.lineSeparator()
                     + "Quit:" + System.lineSeparator()
                     + "  quit";
     private static final String INVALID_ITEM = "--Invalid Item";
