@@ -9,6 +9,8 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 class CommandLineInterfaceTest {
 
     private static final String HEADING = "Henrys Store";
+    private static final String INVALID_ITEM = "Invalid Item";
+
     private CommandLineInterface commandLineInterface = new CommandLineInterface();
     private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private PrintStream printStream = new PrintStream(outputStream);
@@ -35,11 +37,32 @@ class CommandLineInterfaceTest {
 
     @Test
     void ignoresInvalidCommands() {
-        inputStream = createInputStream("invalid");
+        String invalid = "invalid";
+        inputStream = createInputStream(invalid);
 
         commandLineInterface.run(inputStream, printStream);
 
         assertLastConsoleOutput(HEADING);
+    }
+
+    @Test
+    void invalidItemCombination() {
+        String invalid = "add 1 tin bread";
+        inputStream = createInputStream(invalid);
+
+        commandLineInterface.run(inputStream, printStream);
+
+        assertLastConsoleOutput(INVALID_ITEM);
+    }
+
+    @Test
+    void invalidUnit() {
+        String invalid = "add 1 invalid bread";
+        inputStream = createInputStream(invalid);
+
+        commandLineInterface.run(inputStream, printStream);
+
+        assertLastConsoleOutput(INVALID_ITEM);
     }
 
     @Test
