@@ -3,12 +3,12 @@ package org.henrysgrocery.store;
 import java.math.BigDecimal;
 import java.util.Map;
 
-public class PriceService {
-    public static PriceService createPriceService() {
-        return new PriceService();
+public class ProductCatalog {
+    public static ProductCatalog createPriceService() {
+        return new ProductCatalog();
     }
 
-    private PriceService() {
+    private ProductCatalog() {
     }
 
     private Map<Item, BigDecimal> prices = Map.of(

@@ -8,7 +8,7 @@ public class SoupAndBreadPromotion implements Promotion {
 
     private static final double DISCOUNT_MULTIPLIER = 0.5;
 
-    private PriceService priceService = PriceService.createPriceService();
+    private ProductCatalog productCatalog = ProductCatalog.createPriceService();
 
     @Override
     public BigDecimal apply(List<Item> items) {
@@ -20,7 +20,7 @@ public class SoupAndBreadPromotion implements Promotion {
         BigDecimal costWithoutDiscount = items.stream()
                                 .filter(i -> i.name.equals("bread"))
                                 .limit(promotionRepeats)
-                                .map(i -> priceService.getPrice(i))
+                                .map(i -> productCatalog.getPrice(i))
                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return costWithoutDiscount.multiply(BigDecimal.valueOf(DISCOUNT_MULTIPLIER));
