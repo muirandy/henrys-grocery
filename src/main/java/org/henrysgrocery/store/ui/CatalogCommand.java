@@ -7,11 +7,11 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CatalogCommand implements Command {
+class CatalogCommand implements Command {
     private PrintStream out;
     private ProductCatalog productCatalog = ProductCatalog.createProductCatalog();
 
-    public CatalogCommand(PrintStream out) {
+    CatalogCommand(PrintStream out) {
         this.out = out;
     }
 

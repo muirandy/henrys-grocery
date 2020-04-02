@@ -14,7 +14,7 @@ class AddCommand implements Command {
 
     private ProductCatalog productCatalog = ProductCatalog.createProductCatalog();
 
-    public AddCommand(PrintStream out, Basket basket) {
+    AddCommand(PrintStream out, Basket basket) {
         this.out = out;
         this.basket = basket;
     }

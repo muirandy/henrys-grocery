@@ -7,7 +7,7 @@ class InvalidCommand implements Command {
 
     private PrintStream out;
 
-    public InvalidCommand(PrintStream out) {
+    InvalidCommand(PrintStream out) {
         this.out = out;
     }
 

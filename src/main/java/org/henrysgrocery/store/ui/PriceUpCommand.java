@@ -18,7 +18,7 @@ class PriceUpCommand implements Command {
     private final PrintStream out;
     private final Basket basket;
 
-    public PriceUpCommand(PrintStream out, Basket basket) {
+    PriceUpCommand(PrintStream out, Basket basket) {
         this.out = out;
         this.basket = basket;
     }

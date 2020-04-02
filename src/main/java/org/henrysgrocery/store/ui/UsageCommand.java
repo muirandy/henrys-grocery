@@ -18,7 +18,7 @@ class UsageCommand implements Command {
                     + "  quit";
     private PrintStream out;
 
-    public UsageCommand(PrintStream out) {
+    UsageCommand(PrintStream out) {
         this.out = out;
     }
 
