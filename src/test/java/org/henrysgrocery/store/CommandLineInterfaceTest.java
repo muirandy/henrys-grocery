@@ -50,7 +50,7 @@ class CommandLineInterfaceTest {
 
         commandLineInterface.run(inputStream, printStream);
 
-        assertLastConsoleOutput(HEADING);
+        assertLastConsoleOutput(INVALID_ITEM);
     }
 
     @Test

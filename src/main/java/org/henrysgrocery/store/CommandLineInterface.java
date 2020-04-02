@@ -61,8 +61,10 @@ public class CommandLineInterface {
     private void processCommand(String command) {
         if (isAddCommand(command))
             processAddCommand(command);
-        if (isPriceUpCommand(command))
+        else if (isPriceUpCommand(command))
             processPriceUpCommand(command);
+        else
+            processInvalidCommand();
     }
 
     private boolean isAddCommand(String command) {
@@ -143,5 +145,9 @@ public class CommandLineInterface {
     private void displayBasketTotal(BigDecimal total) {
         total = total.setScale(2, RoundingMode.CEILING);
         out.println(PRICE_UP_MESSAGE + total);
+    }
+
+    private void processInvalidCommand() {
+        out.println(INVALID_ITEM);
     }
 }
