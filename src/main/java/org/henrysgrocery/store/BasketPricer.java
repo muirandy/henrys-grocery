@@ -8,6 +8,7 @@ import java.util.List;
 
 class BasketPricer {
 
+    private PriceService priceService = PriceService.createPriceService();
     private List<Promotion> promotions;
 
     BasketPricer(List<Promotion> promotions) {
@@ -16,7 +17,7 @@ class BasketPricer {
 
     public BigDecimal priceUp(List<Item> items) {
         BigDecimal baseCost = items.stream()
-                                .map(i -> i.price)
+                                .map(i -> priceService.getPrice(i))
                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal discount = calculateDiscount(items);
         return baseCost.subtract(discount);

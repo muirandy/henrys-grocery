@@ -8,6 +8,8 @@ public class SoupAndBreadPromotion implements Promotion {
 
     private static final double DISCOUNT_MULTIPLIER = 0.5;
 
+    private PriceService priceService = PriceService.createPriceService();
+
     @Override
     public BigDecimal apply(List<Item> items) {
         long numberOfSoups = items.stream()
@@ -18,7 +20,7 @@ public class SoupAndBreadPromotion implements Promotion {
         BigDecimal costWithoutDiscount = items.stream()
                                 .filter(i -> i.name.equals("bread"))
                                 .limit(promotionRepeats)
-                                .map(i -> i.price)
+                                .map(i -> priceService.getPrice(i))
                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return costWithoutDiscount.multiply(BigDecimal.valueOf(DISCOUNT_MULTIPLIER));
