@@ -1,7 +1,6 @@
 package org.henrysgrocery.store.ui;
 
 import org.henrysgrocery.store.Basket;
-import org.henrysgrocery.store.Command;
 
 import java.io.PrintStream;
 import java.util.regex.Matcher;
@@ -10,8 +9,8 @@ import java.util.regex.Pattern;
 public class CommandFactory {
 
     private static final String USAGE = "HELP";
-    public static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
-    public static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
+    static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
+    static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
 
     private PrintStream out;
     private Basket basket = Basket.create();

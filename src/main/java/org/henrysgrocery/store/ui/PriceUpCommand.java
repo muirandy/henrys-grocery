@@ -2,7 +2,6 @@ package org.henrysgrocery.store.ui;
 
 import org.henrysgrocery.store.Basket;
 import org.henrysgrocery.store.BasketPricerCreator;
-import org.henrysgrocery.store.Command;
 
 import java.io.PrintStream;
 import java.math.BigDecimal;

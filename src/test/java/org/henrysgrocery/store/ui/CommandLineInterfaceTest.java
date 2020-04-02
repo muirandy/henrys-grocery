@@ -1,4 +1,4 @@
-package org.henrysgrocery.store;
+package org.henrysgrocery.store.ui;
 
 import org.junit.jupiter.api.Test;
 

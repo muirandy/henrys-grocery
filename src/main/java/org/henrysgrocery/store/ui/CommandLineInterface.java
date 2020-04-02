@@ -1,6 +1,4 @@
-package org.henrysgrocery.store;
-
-import org.henrysgrocery.store.ui.CommandFactory;
+package org.henrysgrocery.store.ui;
 
 import java.io.InputStream;
 import java.io.PrintStream;

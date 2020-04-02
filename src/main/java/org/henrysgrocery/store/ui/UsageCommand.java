@@ -1,7 +1,5 @@
 package org.henrysgrocery.store.ui;
 
-import org.henrysgrocery.store.Command;
-
 import java.io.PrintStream;
 
 class UsageCommand implements Command {
