@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
-public class ApplePromotion implements Promotion {
+class ApplePromotion implements Promotion {
     @Override
     public BigDecimal apply(List<Item> items) {
         long numberOfApples = items.stream()

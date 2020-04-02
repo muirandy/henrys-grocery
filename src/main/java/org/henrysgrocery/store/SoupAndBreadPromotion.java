@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public class SoupAndBreadPromotion implements Promotion {
+class SoupAndBreadPromotion implements Promotion {
 
     private static final double DISCOUNT_MULTIPLIER = 0.5;
 
