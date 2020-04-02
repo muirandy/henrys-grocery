@@ -14,12 +14,27 @@ public class CommandLineInterface {
     private static final String QUIT = "QUIT";
     private static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
     private static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
+    private static final String USAGE = "HELP";
 
     private static final String HEADER = "--Henrys Store--";
     private static final String INVALID_ITEM = "--Invalid Item";
     private static final String ADD_TO_BASKET_MESSAGE = "--Added %d %s %s";
     private static final String PRICE_UP_MESSAGE = "--Total Basket Cost: ";
     private static final String EXIT_MESSAGE = "--Exit";
+    private static final String USAGE_MESSAGE =
+            "Add an item to the basket:" + System.lineSeparator()
+                    + "  add <quantity> <unit> <item>" + System.lineSeparator()
+                    + "    eg: add 3 single apples" + System.lineSeparator()
+                    + "Price up the basket:" + System.lineSeparator()
+                    + "  price [+/- daysOffset]" + System.lineSeparator()
+                    + "    eg: price" + System.lineSeparator()
+                    + "    eg: price +5" + System.lineSeparator()
+                    + "    eg: price -1" + System.lineSeparator()
+                    + "Display this message:" + System.lineSeparator()
+                    + "  usage" + System.lineSeparator()
+                    + "Quit:" + System.lineSeparator()
+                    + "  quit";
+
 
     private PrintStream out;
     private Scanner scanner;
@@ -63,6 +78,8 @@ public class CommandLineInterface {
             processAddCommand(command);
         else if (isPriceUpCommand(command))
             processPriceUpCommand(command);
+        else if (isUsageCommand(command))
+            processUsageCommand();
         else
             processInvalidCommand();
     }
@@ -149,5 +166,13 @@ public class CommandLineInterface {
 
     private void processInvalidCommand() {
         out.println(INVALID_ITEM);
+    }
+
+    private boolean isUsageCommand(String command) {
+        return USAGE.equalsIgnoreCase(command);
+    }
+
+    private void processUsageCommand() {
+        out.println(USAGE_MESSAGE);
     }
 }

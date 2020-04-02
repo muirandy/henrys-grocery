@@ -14,6 +14,19 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 class CommandLineInterfaceTest {
 
     private static final String HEADING = "--Henrys Store--";
+    private static final String USAGE =
+            "Add an item to the basket:" + System.lineSeparator()
+                    + "  add <quantity> <unit> <item>" + System.lineSeparator()
+                    + "    eg: add 3 single apples" + System.lineSeparator()
+                    + "Price up the basket:" + System.lineSeparator()
+                    + "  price [+/- daysOffset]" + System.lineSeparator()
+                    + "    eg: price" + System.lineSeparator()
+                    + "    eg: price +5" + System.lineSeparator()
+                    + "    eg: price -1" + System.lineSeparator()
+                    + "Display this message:" + System.lineSeparator()
+                    + "  usage" + System.lineSeparator()
+                    + "Quit:" + System.lineSeparator()
+                    + "  quit";
     private static final String INVALID_ITEM = "--Invalid Item";
     private static final String EXIT_MESSAGE = "--Exit";
     private static final String TOTAL_BASKET_COST_MESSAGE = "--Total Basket Cost: ";
@@ -115,9 +128,18 @@ class CommandLineInterfaceTest {
         assertLastConsoleOutput(TOTAL_BASKET_COST_MESSAGE + "1.39");
     }
 
+    @Test
+    void usage() {
+        inputStream = createInputStream("help");
+
+        commandLineInterface.run(inputStream, printStream);
+
+        assertUsage();
+    }
+
     private ByteArrayInputStream createInputStream(String... lines) {
         String input = Arrays.stream(lines)
-                               .collect(Collectors.joining(System.lineSeparator()));
+                             .collect(Collectors.joining(System.lineSeparator()));
         return new ByteArrayInputStream(input.getBytes());
     }
 
@@ -127,5 +149,10 @@ class CommandLineInterfaceTest {
         String lastLine = lines[lines.length - 1];
 
         assertThat(lastLine).isEqualToIgnoringNewLines(expected);
+    }
+
+    private void assertUsage() {
+        String actual = outputStream.toString();
+        assertThat(actual).isEqualToIgnoringNewLines(HEADING + USAGE);
     }
 }
