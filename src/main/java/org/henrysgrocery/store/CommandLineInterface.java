@@ -14,22 +14,24 @@ public class CommandLineInterface {
     public void run(InputStream in, PrintStream out) {
         this.in = in;
         this.out = out;
-
         scanner = new Scanner(in);
+
+        runCli(out);
+    }
+
+    private void runCli(PrintStream out) {
         displayHeading(out);
-        while (scanner.hasNext())
-            processCommand();
+        while (scanner.hasNext()) {
+            String input = scanner.next();
+            if (isQuitCommand(input)) {
+                displayQuitMessage();
+                break;
+            }
+        }
     }
 
     private void displayHeading(PrintStream out) {
         out.println("Henrys Store");
-    }
-
-    private void processCommand() {
-        String input = scanner.next();
-        if (isQuitCommand(input)) {
-            displayQuitMessage();
-        }
     }
 
     private boolean isQuitCommand(String input) {
