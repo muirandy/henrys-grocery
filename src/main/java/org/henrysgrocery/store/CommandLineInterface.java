@@ -3,30 +3,37 @@ package org.henrysgrocery.store;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommandLineInterface {
     private static final String QUIT = "QUIT";
+    private static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
 
     private InputStream in;
     private PrintStream out;
     private Scanner scanner;
+    private Basket basket;
+    private ProductCatalog productCatalog = ProductCatalog.createProductCatalog();
 
     public void run(InputStream in, PrintStream out) {
         this.in = in;
         this.out = out;
         scanner = new Scanner(in);
+        basket = Basket.create();
 
-        runCli(out);
+        runCli();
     }
 
-    private void runCli(PrintStream out) {
+    private void runCli() {
         displayHeading(out);
         while (scanner.hasNext()) {
-            String input = scanner.next();
+            String input = scanner.nextLine();
             if (isQuitCommand(input)) {
                 displayQuitMessage();
                 break;
             }
+            processCommand(input);
         }
     }
 
@@ -42,4 +49,30 @@ public class CommandLineInterface {
         out.println("Exit");
     }
 
+    private void processCommand(String command) {
+        if (isAddCommand(command)) {
+            processAddCommand(command);
+        }
+    }
+
+    private boolean isAddCommand(String next) {
+        Matcher matcher = ADD.matcher(next);
+        return matcher.find();
+    }
+
+    private void processAddCommand(String addCommand) {
+        Matcher matcher = ADD.matcher(addCommand);
+        matcher.find();
+        int quantity = Integer.parseInt(matcher.group(1));
+        String unit = matcher.group(2).toUpperCase();
+        String itemName = matcher.group(3);
+        Item item = productCatalog.getItem(Unit.valueOf(unit), itemName);
+        basket.add(quantity, item);
+        acknowledgeItemAdded(quantity, item);
+    }
+
+    private void acknowledgeItemAdded(int quantity, Item item) {
+        String message = String.format("Added %d %s %s", quantity, item.unit.name().toLowerCase(), item.name);
+        out.println(message);
+    }
 }

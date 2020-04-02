@@ -42,6 +42,15 @@ class CommandLineInterfaceTest {
         assertLastConsoleOutput(HEADING);
     }
 
+    @Test
+    void addItem() {
+        inputStream = createInputStream("add 2 single apples");
+
+        commandLineInterface.run(inputStream, printStream);
+
+        assertLastConsoleOutput("Added 2 single apples");
+    }
+
     private ByteArrayInputStream createInputStream(String s) {
         return new ByteArrayInputStream(s.getBytes());
     }
