@@ -4,18 +4,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-class SoupAndBreadPromotion implements Promotion {
+class SoupAndBreadPromotion extends DateRangePromotion {
 
     private static final double DISCOUNT_MULTIPLIER = 0.5;
-
-    private final LocalDate startDate;
-    private final LocalDate endDate;
 
     private ProductCatalog productCatalog = ProductCatalog.createProductCatalog();
 
     SoupAndBreadPromotion(LocalDate startDate, LocalDate endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+        super(startDate, endDate);
     }
 
     @Override
@@ -34,8 +30,4 @@ class SoupAndBreadPromotion implements Promotion {
         return costWithoutDiscount.multiply(BigDecimal.valueOf(DISCOUNT_MULTIPLIER));
     }
 
-    public boolean applies(LocalDate purchaseDate) {
-        return purchaseDate.isAfter(startDate.minusDays(1))
-                && purchaseDate.isBefore(endDate.plusDays(1));
-    }
 }
