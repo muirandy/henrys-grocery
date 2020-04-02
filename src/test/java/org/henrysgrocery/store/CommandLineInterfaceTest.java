@@ -2,7 +2,12 @@ package org.henrysgrocery.store;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -74,8 +79,31 @@ class CommandLineInterfaceTest {
         assertLastConsoleOutput("Added 2 single apples");
     }
 
-    private ByteArrayInputStream createInputStream(String s) {
-        return new ByteArrayInputStream(s.getBytes());
+    @Test
+    void totalEmptyBasket() {
+        inputStream = createInputStream("price");
+
+        commandLineInterface.run(inputStream, printStream);
+
+        assertLastConsoleOutput("Total Basket Cost: 0.00");
+    }
+
+    @Test
+    void totalItems() {
+        inputStream = createInputStream(
+                "add 1 bottle milk",
+                "add 1 single apples",
+                "price");
+
+        commandLineInterface.run(inputStream, printStream);
+
+        assertLastConsoleOutput("Total Basket Cost: 1.40");
+    }
+
+    private ByteArrayInputStream createInputStream(String... lines) {
+        String input = Arrays.stream(lines)
+                               .collect(Collectors.joining(System.lineSeparator()));
+        return new ByteArrayInputStream(input.getBytes());
     }
 
     private void assertLastConsoleOutput(String expected) {

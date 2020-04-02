@@ -2,6 +2,9 @@ package org.henrysgrocery.store;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +12,7 @@ import java.util.regex.Pattern;
 public class CommandLineInterface {
     private static final String QUIT = "QUIT";
     private static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
+    private static final Pattern PRICE_UP = Pattern.compile("price");
 
     private PrintStream out;
     private Scanner scanner;
@@ -48,13 +52,14 @@ public class CommandLineInterface {
     }
 
     private void processCommand(String command) {
-        if (isAddCommand(command)) {
+        if (isAddCommand(command))
             processAddCommand(command);
-        }
+        if (isPriceUpCommand(command))
+            processPriceUpCommand();
     }
 
-    private boolean isAddCommand(String next) {
-        Matcher matcher = obtainMatcher(next);
+    private boolean isAddCommand(String command) {
+        Matcher matcher = obtainAddMatcher(command);
         return matcher.find();
     }
 
@@ -91,17 +96,36 @@ public class CommandLineInterface {
     }
 
     private Matcher prepareMatcher(String addCommand) {
-        Matcher matcher = obtainMatcher(addCommand);
+        Matcher matcher = obtainAddMatcher(addCommand);
         matcher.find();
         return matcher;
     }
 
-    private Matcher obtainMatcher(String addCommand) {
+    private Matcher obtainAddMatcher(String addCommand) {
         return ADD.matcher(addCommand);
     }
 
     private void acknowledgeItemAdded(int quantity, Item item) {
         String message = String.format("Added %d %s %s", quantity, item.unit.name().toLowerCase(), item.name);
         out.println(message);
+    }
+
+    private boolean isPriceUpCommand(String command) {
+        Matcher matcher = obtainPriceUpMatcher(command);
+        return matcher.find();
+    }
+
+    private Matcher obtainPriceUpMatcher(String addCommand) {
+        return PRICE_UP.matcher(addCommand);
+    }
+
+    private void processPriceUpCommand() {
+        BigDecimal total = basket.priceUp(BasketPricerCreator.forDay(LocalDate.now()));
+        displayBasketTotal(total);
+    }
+
+    private void displayBasketTotal(BigDecimal total) {
+        total = total.setScale(2, RoundingMode.CEILING);
+        out.println("Total Basket Cost: " + total);
     }
 }
