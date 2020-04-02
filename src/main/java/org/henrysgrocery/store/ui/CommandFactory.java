@@ -8,10 +8,9 @@ import java.util.regex.Pattern;
 
 public class CommandFactory {
 
-    private static final String USAGE = "HELP";
     static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
     static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
-
+    private static final String USAGE = "HELP";
     private PrintStream out;
     private Basket basket = Basket.create();
 
@@ -22,12 +21,11 @@ public class CommandFactory {
     public Command create(String command) {
         if (isAddCommand(command))
             return createAddCommand();
-        else if (isPriceUpCommand(command))
+        if (isPriceUpCommand(command))
             return createPriceUpCommand();
-        else if (isUsageCommand(command))
+        if (isUsageCommand(command))
             return createUsageCommand();
-        else
-            return createInvalidCommand();
+        return createInvalidCommand();
     }
 
     private boolean isAddCommand(String command) {
