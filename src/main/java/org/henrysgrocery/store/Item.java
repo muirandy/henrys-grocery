@@ -4,8 +4,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Item {
-    final Unit unit;
-    final String name;
+    public final Unit unit;
+    public final String name;
 
     public Item(Unit unit, String name) {
         this.unit = unit;

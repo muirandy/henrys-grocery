@@ -1,4 +1,6 @@
-package org.henrysgrocery.store;
+package org.henrysgrocery.store.ui;
+
+import org.henrysgrocery.store.*;
 
 import java.io.PrintStream;
 import java.util.regex.Matcher;

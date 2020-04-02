@@ -1,5 +1,7 @@
 package org.henrysgrocery.store;
 
+import org.henrysgrocery.store.ui.CommandFactory;
+
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;

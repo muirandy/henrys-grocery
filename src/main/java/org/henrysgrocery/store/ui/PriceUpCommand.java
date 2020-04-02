@@ -1,4 +1,8 @@
-package org.henrysgrocery.store;
+package org.henrysgrocery.store.ui;
+
+import org.henrysgrocery.store.Basket;
+import org.henrysgrocery.store.BasketPricerCreator;
+import org.henrysgrocery.store.Command;
 
 import java.io.PrintStream;
 import java.math.BigDecimal;
@@ -7,7 +11,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.regex.Matcher;
 
-import static org.henrysgrocery.store.CommandFactory.PRICE_UP;
+import static org.henrysgrocery.store.ui.CommandFactory.PRICE_UP;
 
 class PriceUpCommand implements Command {
     private static final String PRICE_UP_MESSAGE = "--Total Basket Cost: ";
