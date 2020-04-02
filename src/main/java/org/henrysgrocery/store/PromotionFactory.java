@@ -10,7 +10,7 @@ class PromotionFactory {
 
     private static ProductCatalog productCatalog = createProductCatalog();
 
-    static TriggerAndTargetPromotion createSoupAndBreadPromotion() {
+    static Promotion createSoupAndBreadPromotion() {
         LocalDate today = LocalDate.now();
         LocalDate startDate = today.minusDays(1);
         LocalDate endDate = startDate.plusDays(7);
@@ -20,7 +20,7 @@ class PromotionFactory {
         return new TriggerAndTargetPromotion(startDate, endDate, triggerItem, 2, targetItem, fixedPercentagePromotion);
     }
 
-    static FixedPercentagePromotion createApplePromotion() {
+    static Promotion createApplePromotion() {
         LocalDate today = LocalDate.now();
         LocalDate startDate = today.plusDays(3);
         LocalDate endDate = today.plusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
