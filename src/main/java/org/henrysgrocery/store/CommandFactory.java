@@ -7,10 +7,8 @@ import java.util.regex.Pattern;
 class CommandFactory {
 
     private static final String USAGE = "HELP";
-
-
+    static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
     static final Pattern ADD = Pattern.compile("add ([0-9]+) ([A-Za-z]+) ([A-Za-z]+)");
-    private static final Pattern PRICE_UP = Pattern.compile("price( [+-][0-9]+)?");
 
     private PrintStream out;
     private Basket basket = Basket.create();
@@ -19,15 +17,15 @@ class CommandFactory {
         this.out = out;
     }
 
-    public void invoke(String command) {
+    public Command create(String command) {
         if (isAddCommand(command))
-            createAddCommand().execute(command);
+            return createAddCommand();
         else if (isPriceUpCommand(command))
-            createPriceUpCommand(command).execute(command);
+            return createPriceUpCommand();
         else if (isUsageCommand(command))
-            createUsageCommand().execute(command);
+            return createUsageCommand();
         else
-            processInvalidCommand().execute(command);
+            return createInvalidCommand();
     }
 
     private boolean isAddCommand(String command) {
@@ -40,12 +38,12 @@ class CommandFactory {
     }
 
     private boolean isPriceUpCommand(String command) {
-        Matcher matcher = obtainPriceUpMatcher(command);
+        Matcher matcher = PRICE_UP.matcher(command);
         return matcher.find();
     }
 
-    private Command createPriceUpCommand(String command) {
-        return new PriceUpCommand(this, out, basket);
+    private Command createPriceUpCommand() {
+        return new PriceUpCommand(out, basket);
     }
 
     private boolean isUsageCommand(String command) {
@@ -56,13 +54,7 @@ class CommandFactory {
         return new UsageCommand(out);
     }
 
-    private Command processInvalidCommand() {
+    private Command createInvalidCommand() {
         return new InvalidCommand(out);
     }
-
-    Matcher obtainPriceUpMatcher(String addCommand) {
-        return PRICE_UP.matcher(addCommand);
-    }
-
-
 }

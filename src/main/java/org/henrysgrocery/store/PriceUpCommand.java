@@ -7,15 +7,15 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.regex.Matcher;
 
+import static org.henrysgrocery.store.CommandFactory.PRICE_UP;
+
 class PriceUpCommand implements Command {
     private static final String PRICE_UP_MESSAGE = "--Total Basket Cost: ";
 
-    private final CommandFactory commandFactory;
     private final PrintStream out;
     private final Basket basket;
 
-    public PriceUpCommand(CommandFactory commandFactory, PrintStream out, Basket basket) {
-        this.commandFactory = commandFactory;
+    public PriceUpCommand(PrintStream out, Basket basket) {
         this.out = out;
         this.basket = basket;
     }
@@ -29,10 +29,14 @@ class PriceUpCommand implements Command {
     }
 
     private long readPurchaseDaysOffset(String command) {
-        Matcher matcher = commandFactory.obtainPriceUpMatcher(command);
+        Matcher matcher = obtainPriceUpMatcher(command);
         matcher.find();
         String daysOffset = Optional.ofNullable(matcher.group(1)).orElse("0");
         return Long.parseLong(daysOffset.trim());
+    }
+
+    private Matcher obtainPriceUpMatcher(String addCommand) {
+        return PRICE_UP.matcher(addCommand);
     }
 
     private void displayBasketTotal(BigDecimal total) {

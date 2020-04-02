@@ -47,6 +47,6 @@ public class CommandLineInterface {
     }
 
     private void processCommand(String command) {
-        commandFactory.invoke(command);
+        commandFactory.create(command).execute(command);
     }
 }
