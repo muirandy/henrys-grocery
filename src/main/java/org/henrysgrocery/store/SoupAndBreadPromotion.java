@@ -8,7 +8,15 @@ class SoupAndBreadPromotion implements Promotion {
 
     private static final double DISCOUNT_MULTIPLIER = 0.5;
 
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+
     private ProductCatalog productCatalog = ProductCatalog.createProductCatalog();
+
+    SoupAndBreadPromotion(LocalDate startDate, LocalDate endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
     @Override
     public BigDecimal apply(List<Item> items) {
@@ -27,9 +35,6 @@ class SoupAndBreadPromotion implements Promotion {
     }
 
     public boolean applies(LocalDate purchaseDate) {
-        LocalDate today = LocalDate.now();
-        LocalDate startDate = today.minusDays(1);
-        LocalDate endDate = startDate.plusDays(7);
         return purchaseDate.isAfter(startDate.minusDays(1))
                 && purchaseDate.isBefore(endDate.plusDays(1));
     }

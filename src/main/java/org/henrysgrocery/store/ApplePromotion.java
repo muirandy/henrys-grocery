@@ -6,6 +6,14 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 class ApplePromotion implements Promotion {
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+
+    ApplePromotion(LocalDate startDate, LocalDate endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     @Override
     public BigDecimal apply(List<Item> items) {
         long numberOfApples = items.stream()
@@ -16,10 +24,7 @@ class ApplePromotion implements Promotion {
 
     @Override
     public boolean applies(LocalDate purchaseDate) {
-        LocalDate today = LocalDate.now();
-        LocalDate dayAfterEndOfNextMonth = today.plusMonths(2).with(TemporalAdjusters.firstDayOfMonth());
-        return purchaseDate.isAfter(today.plusDays(2))
-                && purchaseDate.isBefore(dayAfterEndOfNextMonth);
-
+        return purchaseDate.isAfter(startDate.minusDays(1))
+                && purchaseDate.isBefore(endDate.plusDays(1));
     }
 }
