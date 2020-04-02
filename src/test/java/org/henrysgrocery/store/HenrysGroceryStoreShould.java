@@ -18,16 +18,22 @@ class HenrysGroceryStoreShould {
     private static final Item TIN_SOUP = PRODUCT_CATALOG.getItem(TIN, SOUP);
 
     private static final LocalDate TODAY = LocalDate.now();
+    private static final LocalDate TWO_DAYS_AGO = TODAY.minusDays(2);
+    private static final LocalDate YESTERDAY = TODAY.minusDays(1);
     private static final LocalDate TWO_DAYS_HENCE = TODAY.plusDays(2);
     private static final LocalDate THREE_DAYS_HENCE = TODAY.plusDays(3);
     private static final LocalDate FIVE_DAYS_HENCE = TODAY.plusDays(5);
+    private static final LocalDate ONE_WEEK_HENCE = TODAY.plusDays(7);
     private static final LocalDate END_OF_NEXT_MONTH = TODAY.plusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
     private static final LocalDate DAY_AFTER_END_OF_NEXT_MONTH = END_OF_NEXT_MONTH.plusDays(1);
 
     private static final BasketPricer BASKET_PRICER_TODAY = BasketPricerCreator.forDay(TODAY);
+    private static final BasketPricer BASKET_PRICER_TWO_DAYS_AGO = BasketPricerCreator.forDay(TWO_DAYS_AGO);
+    private static final BasketPricer BASKET_PRICER_YESTERDAY = BasketPricerCreator.forDay(YESTERDAY);
     private static final BasketPricer BASKET_PRICER_TWO_DAYS_HENCE = BasketPricerCreator.forDay(TWO_DAYS_HENCE);
     private static final BasketPricer BASKET_PRICER_THREE_DAYS_HENCE = BasketPricerCreator.forDay(THREE_DAYS_HENCE);
     private static final BasketPricer BASKET_PRICER_FIVE_DAYS_HENCE = BasketPricerCreator.forDay(FIVE_DAYS_HENCE);
+    private static final BasketPricer BASKET_PRICER_ONE_WEEK_HENCE = BasketPricerCreator.forDay(ONE_WEEK_HENCE);
     private static final BasketPricer BASKET_PRICER_END_OF_NEXT_MONTH = BasketPricerCreator.forDay(END_OF_NEXT_MONTH);
     private static final BasketPricer BASKET_PRICER_DAY_AFTER_END_OF_NEXT_MONTH = BasketPricerCreator.forDay(DAY_AFTER_END_OF_NEXT_MONTH);
 
@@ -79,12 +85,21 @@ class HenrysGroceryStoreShould {
 
     @Test
     void fullPriceBread() {
-        assertBasketValue(Basket.create().add(1, LOAF_BREAD)
+        assertBasketValue(Basket.create()
+                                .add(1, LOAF_BREAD)
                                 .add(1, TIN_SOUP)
                                 .priceUp(BASKET_PRICER_TODAY), 1.45);
         assertBasketValue(Basket.create()
                                 .add(2, TIN_SOUP)
                                 .priceUp(BASKET_PRICER_TODAY), 1.30);
+        assertBasketValue(Basket.create()
+                                .add(2, TIN_SOUP)
+                                .add(1, LOAF_BREAD)
+                                .priceUp(BASKET_PRICER_TWO_DAYS_AGO), 2.10);
+        assertBasketValue(Basket.create()
+                                .add(2, TIN_SOUP)
+                                .add(1, LOAF_BREAD)
+                                .priceUp(BASKET_PRICER_ONE_WEEK_HENCE), 2.10);
     }
 
     @Test
@@ -101,6 +116,10 @@ class HenrysGroceryStoreShould {
                                 .add(4, TIN_SOUP)
                                 .add(1, LOAF_BREAD)
                                 .priceUp(BASKET_PRICER_TODAY), 3.00);
+        assertBasketValue(Basket.create()
+                                .add(2, TIN_SOUP)
+                                .add(1, LOAF_BREAD)
+                                .priceUp(BASKET_PRICER_YESTERDAY), 1.70);
     }
 
     @Test
@@ -110,7 +129,6 @@ class HenrysGroceryStoreShould {
                                 .add(1, LOAF_BREAD)
                                 .add(1, SINGLE_APPLE)
                                 .priceUp(BASKET_PRICER_THREE_DAYS_HENCE), 1.79);
-
     }
 
     @Test

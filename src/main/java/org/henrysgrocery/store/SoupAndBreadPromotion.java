@@ -30,6 +30,7 @@ class SoupAndBreadPromotion implements Promotion {
         LocalDate today = LocalDate.now();
         LocalDate startDate = today.minusDays(1);
         LocalDate endDate = startDate.plusDays(7);
-        return true;
+        return purchaseDate.isAfter(startDate.minusDays(1))
+                && purchaseDate.isBefore(endDate.plusDays(1));
     }
 }
