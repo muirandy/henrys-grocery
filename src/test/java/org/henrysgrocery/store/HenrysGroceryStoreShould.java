@@ -59,27 +59,31 @@ class HenrysGroceryStoreShould {
     }
 
     @Test
-    void singleMilk() {
-        assertBasketValue(Basket.create().add(1, BOTTLE_MILK)
+    void priceUpForSingleMilk() {
+        assertBasketValue(Basket.create()
+                                .add(1, BOTTLE_MILK)
                                 .priceUp(BASKET_PRICER_TODAY), 1.30);
     }
 
     @Test
-    void multipleMilk() {
-        assertBasketValue(Basket.create().add(3, BOTTLE_MILK)
+    void priceUpForMultipleMilk() {
+        assertBasketValue(Basket.create()
+                                .add(3, BOTTLE_MILK)
                                 .priceUp(BASKET_PRICER_TODAY), 3.90);
     }
 
     @Test
-    void differentItems() {
-        assertBasketValue(Basket.create().add(1, BOTTLE_MILK)
+    void priceUpForDifferentItems() {
+        assertBasketValue(Basket.create()
+                                .add(1, BOTTLE_MILK)
                                 .add(1, SINGLE_APPLE)
                                 .priceUp(BASKET_PRICER_TODAY), 1.40);
     }
 
     @Test
-    void discountedApple() {
-        assertBasketValue(Basket.create().add(1, SINGLE_APPLE)
+    void priceUpForDiscountedApple() {
+        assertBasketValue(Basket.create()
+                                .add(1, SINGLE_APPLE)
                                 .priceUp(BASKET_PRICER_THREE_DAYS_HENCE), 0.09);
         assertBasketValue(Basket.create()
                                 .add(1, SINGLE_APPLE)
@@ -87,8 +91,9 @@ class HenrysGroceryStoreShould {
     }
 
     @Test
-    void fullPriceApples() {
-        assertBasketValue(Basket.create().add(1, SINGLE_APPLE)
+    void priceUpForFullPriceApples() {
+        assertBasketValue(Basket.create()
+                                .add(1, SINGLE_APPLE)
                                 .priceUp(BASKET_PRICER_TODAY), 0.10);
         assertBasketValue(Basket.create()
                                 .add(1, SINGLE_APPLE)
@@ -99,7 +104,7 @@ class HenrysGroceryStoreShould {
     }
 
     @Test
-    void fullPriceBread() {
+    void priceUpForFullPriceBread() {
         assertBasketValue(Basket.create()
                                 .add(1, LOAF_BREAD)
                                 .add(1, TIN_SOUP)
@@ -118,7 +123,7 @@ class HenrysGroceryStoreShould {
     }
 
     @Test
-    void halfPriceBread() {
+    void priceUpForHalfPriceBread() {
         assertBasketValue(Basket.create()
                                 .add(2, TIN_SOUP)
                                 .add(1, LOAF_BREAD)
@@ -138,7 +143,7 @@ class HenrysGroceryStoreShould {
     }
 
     @Test
-    void multiPromotions() {
+    void priceUpForMultiPromotions() {
         assertBasketValue(Basket.create()
                                 .add(2, TIN_SOUP)
                                 .add(1, LOAF_BREAD)
@@ -147,7 +152,7 @@ class HenrysGroceryStoreShould {
     }
 
     @Test
-    void example1() {
+    void showExample1() {
         assertBasketValue(Basket.create()
                                 .add(3, TIN_SOUP)
                                 .add(2, LOAF_BREAD)
@@ -155,7 +160,7 @@ class HenrysGroceryStoreShould {
     }
 
     @Test
-    void example2() {
+    void showExample2() {
         assertBasketValue(Basket.create()
                                 .add(6, SINGLE_APPLE)
                                 .add(1, BOTTLE_MILK)
@@ -163,7 +168,7 @@ class HenrysGroceryStoreShould {
     }
 
     @Test
-    void example3() {
+    void showExample3() {
         assertBasketValue(Basket.create()
                                 .add(6, SINGLE_APPLE)
                                 .add(1, BOTTLE_MILK)
@@ -171,7 +176,7 @@ class HenrysGroceryStoreShould {
     }
 
     @Test
-    void example4() {
+    void showExample4() {
         assertBasketValue(Basket.create()
                                 .add(3, SINGLE_APPLE)
                                 .add(2, TIN_SOUP)

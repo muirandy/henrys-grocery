@@ -21,5 +21,4 @@ public class BasketPricerCreator {
 
         return new BasketPricer(promotions);
     }
-
 }
