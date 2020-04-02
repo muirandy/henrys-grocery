@@ -29,11 +29,11 @@ public class BasketPricerCreator {
         return new SoupAndBreadPromotion(startDate, endDate);
     }
 
-    private static ApplePromotion createApplePromotion() {
+    private static FixedPercentagePromotion createApplePromotion() {
         LocalDate today = LocalDate.now();
         LocalDate startDate = today.plusDays(3);
         LocalDate endDate = today.plusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
         Item targetItem = productCatalog.getItem(Unit.SINGLE, ProductCatalog.APPLES);
-        return new ApplePromotion(startDate, endDate, targetItem);
+        return new FixedPercentagePromotion(startDate, endDate, targetItem, 10);
     }
 }
