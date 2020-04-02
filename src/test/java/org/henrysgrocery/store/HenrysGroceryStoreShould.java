@@ -9,6 +9,7 @@ import java.time.temporal.TemporalAdjusters;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.henrysgrocery.store.ProductCatalog.*;
 import static org.henrysgrocery.store.Unit.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class HenrysGroceryStoreShould {
     private static final ProductCatalog PRODUCT_CATALOG = createProductCatalog();
@@ -41,6 +42,20 @@ class HenrysGroceryStoreShould {
     @Test
     void emptyBasket() {
         assertBasketValue(Basket.create().priceUp(BASKET_PRICER_TODAY), 0);
+    }
+
+    @Test
+    void throwForInvalidItem() {
+        assertThrows(ProductCatalog.InvalidProductException.class, () -> {
+            createProductCatalog().getItem(TIN, "invalid");
+        });
+    }
+
+    @Test
+    void throwForInvalidCombination() {
+        assertThrows(ProductCatalog.InvalidProductException.class, () -> {
+            createProductCatalog().getItem(TIN, BREAD);
+        });
     }
 
     @Test

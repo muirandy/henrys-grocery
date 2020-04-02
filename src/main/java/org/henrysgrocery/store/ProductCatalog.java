@@ -31,6 +31,12 @@ public class ProductCatalog {
     }
 
     public Item getItem(Unit unit, String name) {
+        if (!catalog.containsKey(new Item(unit, name)))
+            throw new InvalidProductException();
         return new Item(unit, name);
     }
+
+    public class InvalidProductException extends RuntimeException {
+    }
+
 }
