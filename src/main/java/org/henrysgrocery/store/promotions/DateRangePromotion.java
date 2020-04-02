@@ -1,4 +1,6 @@
-package org.henrysgrocery.store;
+package org.henrysgrocery.store.promotions;
+
+import org.henrysgrocery.store.Promotion;
 
 import java.time.LocalDate;
 

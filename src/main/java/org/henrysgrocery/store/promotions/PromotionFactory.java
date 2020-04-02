@@ -1,4 +1,8 @@
-package org.henrysgrocery.store;
+package org.henrysgrocery.store.promotions;
+
+import org.henrysgrocery.store.Item;
+import org.henrysgrocery.store.ProductCatalog;
+import org.henrysgrocery.store.Promotion;
 
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -6,11 +10,11 @@ import java.time.temporal.TemporalAdjusters;
 import static org.henrysgrocery.store.ProductCatalog.*;
 import static org.henrysgrocery.store.Unit.*;
 
-class PromotionFactory {
+public class PromotionFactory {
 
     private static ProductCatalog productCatalog = createProductCatalog();
 
-    static Promotion createSoupAndBreadPromotion() {
+    public static Promotion createSoupAndBreadPromotion() {
         LocalDate today = LocalDate.now();
         LocalDate startDate = today.minusDays(1);
         LocalDate endDate = startDate.plusDays(7);
@@ -20,7 +24,7 @@ class PromotionFactory {
         return new TriggerAndTargetPromotion(startDate, endDate, triggerItem, 2, targetItem, fixedPercentagePromotion);
     }
 
-    static Promotion createApplePromotion() {
+    public static Promotion createApplePromotion() {
         LocalDate today = LocalDate.now();
         LocalDate startDate = today.plusDays(3);
         LocalDate endDate = today.plusMonths(1).with(TemporalAdjusters.lastDayOfMonth());

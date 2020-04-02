@@ -1,4 +1,7 @@
-package org.henrysgrocery.store;
+package org.henrysgrocery.store.promotions;
+
+import org.henrysgrocery.store.Item;
+import org.henrysgrocery.store.Promotion;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

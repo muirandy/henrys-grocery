@@ -1,5 +1,7 @@
 package org.henrysgrocery.store;
 
+import org.henrysgrocery.store.promotions.PromotionFactory;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
