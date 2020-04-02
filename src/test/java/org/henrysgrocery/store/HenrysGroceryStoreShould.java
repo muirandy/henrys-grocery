@@ -9,10 +9,11 @@ import java.time.temporal.TemporalAdjusters;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class HenrysGroceryStoreShould {
-    private static final Item MILK = new Item(Unit.BOTTLE, "milk");
-    private static final Item APPLE = new Item(Unit.SINGLE, "apples");
-    private static final Item BREAD = new Item(Unit.LOAF, "bread");
-    private static final Item SOUP = new Item(Unit.TIN, "soup");
+    private static final ProductCatalog PRODUCT_CATALOG = ProductCatalog.createProductCatalog();
+    private static final Item MILK = PRODUCT_CATALOG.getItem(Unit.BOTTLE, "milk");
+    private static final Item APPLE = PRODUCT_CATALOG.getItem(Unit.SINGLE, "apples");
+    private static final Item BREAD = PRODUCT_CATALOG.getItem(Unit.LOAF, "bread");
+    private static final Item SOUP = PRODUCT_CATALOG.getItem(Unit.TIN, "soup");
 
     private static final LocalDate TODAY = LocalDate.now();
     private static final LocalDate TWO_DAYS_HENCE = TODAY.plusDays(2);

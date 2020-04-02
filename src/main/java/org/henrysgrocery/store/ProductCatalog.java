@@ -21,4 +21,9 @@ public class ProductCatalog {
     public BigDecimal getPrice(Item item) {
         return catalog.get(item);
     }
+
+    public Item getItem(Unit unit, String name) {
+        Item requestedItem = new Item(unit, name);
+        return requestedItem;
+    }
 }

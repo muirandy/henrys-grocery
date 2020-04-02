@@ -3,7 +3,7 @@ package org.henrysgrocery.store;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Item {
+class Item {
     final Unit unit;
     final String name;
 
