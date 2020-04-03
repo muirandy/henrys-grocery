@@ -28,6 +28,8 @@ class CommandLineInterfaceTest {
                     + "    eg: price -1" + System.lineSeparator()
                     + "Display this message:" + System.lineSeparator()
                     + "  help" + System.lineSeparator()
+                    + "Show the Catalog of Items:"+ System.lineSeparator()
+                    + "  catalog" + System.lineSeparator()
                     + "Quit:" + System.lineSeparator()
                     + "  quit";
     private static final String INVALID_ITEM = "--Invalid Item";

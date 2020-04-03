@@ -14,6 +14,8 @@ class UsageCommand implements Command {
                     + "    eg: price -1" + System.lineSeparator()
                     + "Display this message:" + System.lineSeparator()
                     + "  help" + System.lineSeparator()
+                    + "Show the Catalog of Items:"+ System.lineSeparator()
+                    + "  catalog" + System.lineSeparator()
                     + "Quit:" + System.lineSeparator()
                     + "  quit";
     private PrintStream out;
